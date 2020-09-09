@@ -1,0 +1,49 @@
+I"�<h4 id="环境">环境</h4>
+<p>centos7</p>
+
+<h4 id="weblogic环境搭建">weblogic环境搭建</h4>
+<p><a href="https://github.com/QAX-A-Team/WeblogicEnvironment">奇安信A-team的快速搭建脚本</a>
+此自动化项目中存在以下两个问题：</p>
+
+<ol>
+  <li>weblogic10版本搭建过程出错</li>
+  <li>未拷贝出需要用到的jdk代码</li>
+</ol>
+
+<ul>
+  <li>
+    <p>问题1解决方案，我们使用vulhub的docker，由于其未开启远程调试，我们修改docker-compose文件，修改后的docker文件为<a href="http://192.168.0.43:20080/sec/vulDocker/tree/master/weblogic_10_remote">weblogic10开启远程调试dokcer文件</a></p>
+  </li>
+  <li>
+    <p>问题2解决方案，在sh文件中添加如下代码：<code class="language-plaintext highlighter-rouge">docker cp your_weblogic_name:/java ./middleware</code></p>
+  </li>
+</ul>
+
+<h4 id="远程调试环境搭建">远程调试环境搭建</h4>
+
+<h5 id="安装idea">安装idea</h5>
+<p>下载安装</p>
+
+<h5 id="打开项目">打开项目</h5>
+<p>打开搭建环境目录下新生成的middleware文件夹，将目录下的moudules和server/lib文件夹</p>
+
+<p><img src="/img/2020-09-09-weblogic远程调试/1.png" alt="" /></p>
+
+<p>设置jdk源码</p>
+
+<p><img src="/img/2020-09-09-weblogic远程调试/2.png" alt="" /></p>
+
+<p>由于源码包中不包含jre下的部分代码，因此</p>
+
+<p><img src="/img/2020-09-09-weblogic远程调试/3.png" alt="" /></p>
+
+<h5 id="远程调试设置">远程调试设置</h5>
+<p>点击Run下的Edit…进行相关设置</p>
+
+<p><img src="/img/2020-09-09-weblogic远程调试/4.png" alt="" /></p>
+
+<p><img src="/img/2020-09-09-weblogic远程调试/5.png" alt="" /></p>
+
+<p>然后设置断点，点击Debug，发送相关请求即可。</p>
+
+:ET
