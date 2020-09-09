@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "weblogic xmlDecoder反序列化"
+title:      "weblogic xmlDecoder反序列化漏洞"
 subtitle:   ""
 date:       2020-09-09 12:00:00
 author:     "seal"
