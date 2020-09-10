@@ -11,11 +11,10 @@
     <meta name="theme-color" content="#000000">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="weblogic远程调试设置 - Seal的博客 | Seal Blog">
+    <meta property="og:title" content="java基础知识 - Seal的博客 | Seal Blog">
     
     <meta property="og:type" content="article">
-    <meta property="og:description" content="环境
-centos7
+    <meta property="og:description" content="类
 ">
     
     <meta property="article:published_time" content="2020-09-09T20:00:00Z">
@@ -24,18 +23,14 @@ centos7
     <meta property="article:author" content="seal">
     
     
-    <meta property="article:tag" content="web安全">
-    
-    <meta property="article:tag" content="weblogic">
-    
     <meta property="article:tag" content="java">
     
     
     <meta property="og:image" content="http://localhost:4000/img/avatar-hux-ny.jpg">
-    <meta property="og:url" content="http://localhost:4000/2020/09/09/weblogic%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95/">
+    <meta property="og:url" content="http://localhost:4000/2020/09/09/java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
     <meta property="og:site_name" content="Seal的博客 | Seal Blog">
     
-    <title>weblogic远程调试设置 - Seal的博客 | Seal Blog</title>
+    <title>java基础知识 - Seal的博客 | Seal Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -44,7 +39,7 @@ centos7
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2020/09/09/weblogic%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95/">
+    <link rel="canonical" href="http://localhost:4000/2020/09/09/java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -231,14 +226,10 @@ centos7
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/archive/?tag=web%E5%AE%89%E5%85%A8" title="web安全">web安全</a>
-                        
-                        <a class="tag" href="/archive/?tag=weblogic" title="weblogic">weblogic</a>
-                        
                         <a class="tag" href="/archive/?tag=java" title="java">java</a>
                         
                     </div>
-                    <h1>weblogic远程调试设置</h1>
+                    <h1>java基础知识</h1>
                     
                     <h2 class="subheading"></h2>
                     <span class="meta">Posted by seal on September 9, 2020</span>
@@ -267,71 +258,201 @@ centos7
                 <!-- Multi-Lingual -->
                 
 
-				<h4 id="环境">环境</h4>
-<p>centos7</p>
+				<h2 id="类">类</h2>
 
-<h4 id="weblogic环境搭建">weblogic环境搭建</h4>
-<p><a href="https://github.com/QAX-A-Team/WeblogicEnvironment">奇安信A-team的快速搭建脚本</a>
-此自动化项目中存在以下两个问题：</p>
+<p>类是一个模板，它描述一类对象的行为和状态。</p>
 
+<h2 id="对象">对象</h2>
+<p>对象是类的一个实例（对象不是找个女朋友），有状态和行为。例如，一条狗是一个对象，它的状态有：颜色、名字、品种；行为有：摇尾巴、叫、吃等。
+下图中男孩（boy）、女孩（girl）为类（class），而具体的每个人为该类的对象（object）：</p>
+
+<p><img src="/img/2020-09-09-java基础知识/object-class.jpg" alt="" /></p>
+
+<h2 id="class对象">class对象</h2>
+<p>Class代表类的实体，在运行的Java应用程序中表示类和接口。在这个类中提供了很多有用的方法，这里对他们简单的分类介绍。</p>
+
+<h2 id="反射">反射</h2>
+<p>JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；
+对于任意一个对象，都能够调用它的任意方法和属性；
+这种动态获取信息以及动态调用对象方法的功能称为java语言的反射机制。</p>
+
+<h2 id="获取class对象的方法">获取class对象的方法</h2>
 <ol>
-  <li>weblogic10版本搭建过程出错</li>
-  <li>未拷贝出需要用到的jdk代码</li>
+  <li>根据当前对象获取class：
+    <ul>
+      <li>getClass()函数：<code class="language-plaintext highlighter-rouge">对象.getClass()</code></li>
+      <li>class属性：<code class="language-plaintext highlighter-rouge">对象.class</code></li>
+    </ul>
+  </li>
+  <li>根据类名获取
+    <ul>
+      <li>Class.forName(类名)
+三种方法获取到的Class对象相同
+<img src="/img/2020-09-09-java基础知识/getclass.png" alt="" /></li>
+    </ul>
+  </li>
 </ol>
 
-<ul>
-  <li>
-    <p>问题1解决方案，我们使用vulhub的docker，由于其未开启远程调试，我们修改docker-compose文件，修改后的docker文件为<a href="http://192.168.0.43:20080/sec/vulDocker/tree/master/weblogic_10_remote">weblogic10开启远程调试dokcer文件</a></p>
-  </li>
-  <li>
-    <p>问题2解决方案，在sh文件中添加如下代码：<code class="language-plaintext highlighter-rouge">docker cp your_weblogic_name:/java ./middleware</code></p>
-  </li>
-</ul>
+<h2 id="通过class生成实例对象以及私有函数的调用">通过class生成实例对象以及私有函数的调用</h2>
 
-<h4 id="远程调试环境搭建">远程调试环境搭建</h4>
+<blockquote>
+  <p>无参</p>
+</blockquote>
 
-<h5 id="安装idea">安装idea</h5>
-<p>下载安装</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre>	public user() { }
+    public int getAge() { return age; }
+    public void setAge(int age) {
+        this.age = age;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+</pre></td></tr></tbody></table></code></pre></div></div>
 
-<h5 id="打开项目">打开项目</h5>
-<p>打开搭建环境目录下新生成的middleware文件夹，将目录下的moudules和server/lib文件夹</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>Class us_class_3=Class.forName("user");
+Object us_obj=us_class_3.newInstance();
+user us=(user)us_obj;
+us.setAge(15);
+us.setName("lihua");
+System.out.println(us.getName());
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>输出： lihua</p>
 
-<p><img src="/img/2020-09-09-weblogic远程调试/1.png" alt="" /></p>
+<blockquote>
+  <p>有参</p>
+</blockquote>
 
-<p>设置jdk源码</p>
+<pre><code class="language-构造函数">public user(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+</code></pre>
 
-<p><img src="/img/2020-09-09-weblogic远程调试/2.png" alt="" /></p>
+<pre><code class="language-调用">        Class us_class_3=Class.forName("user");
+        Constructor ct=us_class_3.getDeclaredConstructor(new Class[]{String.class,int.class});
+        Object us_obj=ct.newInstance(new Object[]{"lihua",15});
+        user us=(user)us_obj;
+        System.out.println(us.getName());
+</code></pre>
+<p>输出： lihua</p>
 
-<p>由于源码包中不包含jre下的部分代码，因此</p>
+<blockquote>
+  <p>私有</p>
+</blockquote>
 
-<p><img src="/img/2020-09-09-weblogic远程调试/3.png" alt="" /></p>
+<p>user类：</p>
 
-<h5 id="远程调试设置">远程调试设置</h5>
-<p>点击Run下的Edit…进行相关设置</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre>    private int getAge() {
+        this.age=15;
+        return age;
+    }
+</pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><img src="/img/2020-09-09-weblogic远程调试/4.png" alt="" /></p>
+<p>获取并执行：</p>
 
-<p><img src="/img/2020-09-09-weblogic远程调试/5.png" alt="" /></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre>        Class us_class_3=Class.forName("user");
+        Method method_getAge=us_class_3.getDeclaredMethod("getAge");
+        method_getAge.setAccessible(true);
+        Object obj=method_getAge.invoke(us_class_3.newInstance());
+        System.out.println(obj);
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>输出： 15</p>
 
-<p>然后设置断点，点击Debug，发送相关请求即可。</p>
+<blockquote>
+  <p>other</p>
+</blockquote>
 
+<p>user类：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>	private int getAge() {
+        return age;
+    }
+    private void setAge(int age) {
+        this.age = age;
+    }
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>获取并执行：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre>        Class us_class_3=Class.forName("user");
+        Method method_setAge = us_class_3.getDeclaredMethod("setAge", int.class);
+        method_setAge.setAccessible(true);
+        Object obj=us_class_3.newInstance();
+        method_setAge.invoke(obj, 15);
+
+        Method method_getAge=us_class_3.getDeclaredMethod("getAge");
+        method_getAge.setAccessible(true);
+        Object obj1=method_getAge.invoke(obj);
+        System.out.println(obj1);
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>输出：15</p>
+
+<h2 id="序列化与反序列化">序列化与反序列化</h2>
+<p>序列化与反序列化时，我们序列化中数据包含的是哪些信息：只有对象中的属性值而已。
+Java JDK底层会先调用无参构造方法实例化，再读取序列化的字段数据赋值，所以我们没有办法将可控的字段值在实例化阶段传入构造方法中对其内部逻辑产生影响。</p>
+
+<h2 id="参考">参考</h2>
+<p>https://www.runoob.com/java/java-object-classes.html
+https://www.jianshu.com/p/9be58ee20dee</p>
 
 
                 <hr style="visibility: hidden;">
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2020/09/09/weblogic-xmlDecoder%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" data-toggle="tooltip" data-placement="top" title="weblogic xmlDecoder反序列化漏洞">
+                        <a href="/2020/09/09/java%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" data-toggle="tooltip" data-placement="top" title="java代理模式">
                         Previous<br>
-                        <span>weblogic xmlDecoder反序列化漏洞</span>
+                        <span>java代理模式</span>
                         </a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2020/09/09/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%BA%A2%E5%87%BA%E6%94%BB%E5%87%BB%E4%B8%8E%E6%A3%80%E6%B5%8B-CVE-2018-8174/" data-toggle="tooltip" data-placement="top" title="浏览器溢出攻击与检测（CVE-2018-8174）">
+                        <a href="/2020/09/09/weblogic-xmlDecoder%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" data-toggle="tooltip" data-placement="top" title="weblogic xmlDecoder反序列化漏洞">
                         Next<br>
-                        <span>浏览器溢出攻击与检测（CVE-2018-8174）</span>
+                        <span>weblogic xmlDecoder反序列化漏洞</span>
                         </a>
                     </li>
                     

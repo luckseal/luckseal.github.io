@@ -1,0 +1,179 @@
+I"\<h2 id="类">类</h2>
+
+<p>类是一个模板，它描述一类对象的行为和状态。</p>
+
+<h2 id="对象">对象</h2>
+<p>对象是类的一个实例（对象不是找个女朋友），有状态和行为。例如，一条狗是一个对象，它的状态有：颜色、名字、品种；行为有：摇尾巴、叫、吃等。
+下图中男孩（boy）、女孩（girl）为类（class），而具体的每个人为该类的对象（object）：</p>
+
+<p><img src="/img/2020-09-09-java基础知识/object-class.jpg" alt="" /></p>
+
+<h2 id="class对象">class对象</h2>
+<p>Class代表类的实体，在运行的Java应用程序中表示类和接口。在这个类中提供了很多有用的方法，这里对他们简单的分类介绍。</p>
+
+<h2 id="反射">反射</h2>
+<p>JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；
+对于任意一个对象，都能够调用它的任意方法和属性；
+这种动态获取信息以及动态调用对象方法的功能称为java语言的反射机制。</p>
+
+<h2 id="获取class对象的方法">获取class对象的方法</h2>
+<ol>
+  <li>根据当前对象获取class：
+    <ul>
+      <li>getClass()函数：<code class="language-plaintext highlighter-rouge">对象.getClass()</code></li>
+      <li>class属性：<code class="language-plaintext highlighter-rouge">对象.class</code></li>
+    </ul>
+  </li>
+  <li>根据类名获取
+    <ul>
+      <li>Class.forName(类名)
+三种方法获取到的Class对象相同
+<img src="/img/2020-09-09-java基础知识/getclass.png" alt="" /></li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="通过class生成实例对象以及私有函数的调用">通过class生成实例对象以及私有函数的调用</h2>
+
+<blockquote>
+  <p>无参</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre>	public user() { }
+    public int getAge() { return age; }
+    public void setAge(int age) {
+        this.age = age;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>Class us_class_3=Class.forName("user");
+Object us_obj=us_class_3.newInstance();
+user us=(user)us_obj;
+us.setAge(15);
+us.setName("lihua");
+System.out.println(us.getName());
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>输出： lihua</p>
+
+<blockquote>
+  <p>有参</p>
+</blockquote>
+
+<pre><code class="language-构造函数">public user(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+</code></pre>
+
+<pre><code class="language-调用">        Class us_class_3=Class.forName("user");
+        Constructor ct=us_class_3.getDeclaredConstructor(new Class[]{String.class,int.class});
+        Object us_obj=ct.newInstance(new Object[]{"lihua",15});
+        user us=(user)us_obj;
+        System.out.println(us.getName());
+</code></pre>
+<p>输出： lihua</p>
+
+<blockquote>
+  <p>私有</p>
+</blockquote>
+
+<p>user类：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre>    private int getAge() {
+        this.age=15;
+        return age;
+    }
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>获取并执行：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre>        Class us_class_3=Class.forName("user");
+        Method method_getAge=us_class_3.getDeclaredMethod("getAge");
+        method_getAge.setAccessible(true);
+        Object obj=method_getAge.invoke(us_class_3.newInstance());
+        System.out.println(obj);
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>输出： 15</p>
+
+<blockquote>
+  <p>other</p>
+</blockquote>
+
+<p>user类：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>	private int getAge() {
+        return age;
+    }
+    private void setAge(int age) {
+        this.age = age;
+    }
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>获取并执行：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre>        Class us_class_3=Class.forName("user");
+        Method method_setAge = us_class_3.getDeclaredMethod("setAge", int.class);
+        method_setAge.setAccessible(true);
+        Object obj=us_class_3.newInstance();
+        method_setAge.invoke(obj, 15);
+
+        Method method_getAge=us_class_3.getDeclaredMethod("getAge");
+        method_getAge.setAccessible(true);
+        Object obj1=method_getAge.invoke(obj);
+        System.out.println(obj1);
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>输出：15</p>
+
+<h2 id="序列化与反序列化">序列化与反序列化</h2>
+<p>序列化与反序列化时，我们序列化中数据包含的是哪些信息：只有对象中的属性值而已。
+Java JDK底层会先调用无参构造方法实例化，再读取序列化的字段数据赋值，所以我们没有办法将可控的字段值在实例化阶段传入构造方法中对其内部逻辑产生影响。</p>
+
+<h2 id="参考">参考</h2>
+<p>https://www.runoob.com/java/java-object-classes.html
+https://www.jianshu.com/p/9be58ee20dee</p>
+:ET

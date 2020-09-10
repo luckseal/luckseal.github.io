@@ -228,6 +228,41 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2020/09/09/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%BA%A2%E5%87%BA%E6%94%BB%E5%87%BB%E4%B8%8E%E6%A3%80%E6%B5%8B-CVE-2018-8174/">
+        <h2 class="post-title">
+            浏览器溢出攻击与检测（CVE-2018-8174）
+        </h2>
+        
+        <h3 class="post-subtitle">
+            
+        </h3>
+        
+        <div class="post-content-preview">
+            
+                1、背景信息
+
+攻击者ip：192.168.1.13
+恶意网址： http://192.168.1.13/exploit.html
+
+受害者系统： windows7
+受害者浏览器：IE8 8.0.7600.16385
+
+2、攻击流程
+受害者访问恶意网址 http://192.168.1.13/exploit.html，系统即可被攻击者控制：
+
+
+3、监测思路
+可监测浏览器是否存在开启非预期子...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by seal on September 9, 2020
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2020/09/09/weblogic%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95/">
         <h2 class="post-title">
             weblogic远程调试设置
@@ -297,6 +332,110 @@ public WorkContextXmlInputAdapter(InputStream var1...
 </div>
 <hr>
 
+<div class="post-preview">
+    <a href="/2020/09/09/java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+        <h2 class="post-title">
+            java基础知识
+        </h2>
+        
+        <h3 class="post-subtitle">
+            
+        </h3>
+        
+        <div class="post-content-preview">
+            
+                类
+
+类是一个模板，它描述一类对象的行为和状态。
+
+对象
+对象是类的一个实例（对象不是找个女朋友），有状态和行为。例如，一条狗是一个对象，它的状态有：颜色、名字、品种；行为有：摇尾巴、叫、吃等。
+下图中男孩（boy）、女孩（girl）为类（class），而具体的每个人为该类的对象（object）：
+
+
+
+class对象
+Class代表类的实体，在运行的Java应用程序中表示类和接口。在这个类...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by seal on September 9, 2020
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2020/09/09/java%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">
+        <h2 class="post-title">
+            java代理模式
+        </h2>
+        
+        <h3 class="post-subtitle">
+            
+        </h3>
+        
+        <div class="post-content-preview">
+            
+                代理目的
+
+代理(Proxy)可以在目标对象实现的基础上,增强额外的功能操作,即扩展目标对象的功能.
+
+基本情况
+
+接口
+
+1
+2
+3
+public interface HelloInterface {
+    void sayHello();
+}
+
+
+被代理类
+
+1
+2
+3
+4
+5
+6
+public class Hello implements HelloInterface{
+    @O...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by seal on September 9, 2020
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2020/09/09/jackson-databind%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8%E9%93%BEfastjson%E5%A4%8D%E7%8E%B0-CVE-2020-8840/">
+        <h2 class="post-title">
+            jackson-databind反序列化利用链fastjson复现（CVE-2020-8840）
+        </h2>
+        
+        <h3 class="post-subtitle">
+            
+        </h3>
+        
+        <div class="post-content-preview">
+            
+                漏洞介绍
+
+2月19日，NVD发布安全通告披露了jackson-databind由JNDI注入导致的远程代码执行漏洞（CVE-2020-8840），CVSS评分为9.8  。受影响版本的jackson-databind中由于缺少某些xbean-reflect/JNDI黑名单类，如org.apache.xbean.propertyeditor.JndiConverter，可导致攻击者使用JND...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by seal on September 9, 2020
+    </p>
+</div>
+<hr>
+
 
 <!-- Pager -->
 
@@ -324,17 +463,27 @@ public WorkContextXmlInputAdapter(InputStream var1...
         
         
         
-                <a data-sort="0000" 
+                <a data-sort="0004" 
+                    href="/archive/?tag=%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"
+                    title="反序列化"
+                    rel="2">反序列化</a>
+        
+                <a data-sort="0002" 
+                    href="/archive/?tag=java"
+                    title="java"
+                    rel="4">java</a>
+        
+                <a data-sort="0004" 
+                    href="/archive/?tag=%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"
+                    title="漏洞复现"
+                    rel="2">漏洞复现</a>
+        
+                <a data-sort="0004" 
                     href="/archive/?tag=web%E5%AE%89%E5%85%A8"
                     title="web安全"
                     rel="2">web安全</a>
         
-                <a data-sort="0000" 
-                    href="/archive/?tag=java"
-                    title="java"
-                    rel="2">java</a>
-        
-                <a data-sort="0000" 
+                <a data-sort="0004" 
                     href="/archive/?tag=weblogic"
                     title="weblogic"
                     rel="2">weblogic</a>

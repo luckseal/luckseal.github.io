@@ -1,0 +1,151 @@
+I"V(<h1 id="代理目的">代理目的</h1>
+
+<p>代理(Proxy)可以在目标对象实现的基础上,增强额外的功能操作,即扩展目标对象的功能.</p>
+
+<h1 id="基本情况">基本情况</h1>
+
+<h2 id="接口">接口</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="k">public</span> <span class="k">interface</span> <span class="nc">HelloInterface</span> <span class="p">{</span>
+    <span class="k">void</span> <span class="nf">sayHello</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="被代理类">被代理类</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Hello</span> <span class="kd">implements</span> <span class="nc">HelloInterface</span><span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sayHello</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Hello lihua!"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h1 id="静态代理">静态代理</h1>
+
+<p>创建一个接口，然后创建被代理的类实现该接口并且实现该接口中的抽象方法。之后再创建一个代理类，同时使其也实现这个接口。在代理类中持有一个被代理对象的引用，而后在代理类方法中调用该对象的方法。</p>
+
+<h2 id="代理类">代理类</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloProxy</span> <span class="kd">implements</span> <span class="nc">HelloInterface</span><span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">HelloInterface</span> <span class="n">helloInterface</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Hello</span><span class="o">();</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sayHello</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Before invoke sayHello"</span> <span class="o">);</span>
+        <span class="n">helloInterface</span><span class="o">.</span><span class="na">sayHello</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"After invoke sayHello"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="代理类的使用">代理类的使用</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre>    <span class="k">public</span> <span class="k">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">HelloProxy</span> <span class="n">helloProxy</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HelloProxy</span><span class="p">();</span>
+        <span class="n">helloProxy</span><span class="p">.</span><span class="n">sayHello</span><span class="p">();</span>
+    <span class="p">}</span>
+    
+<span class="err">输出：</span>
+<span class="n">Before</span> <span class="n">invoke</span> <span class="n">sayHello</span>
+<span class="n">Hello</span> <span class="n">zhanghao</span><span class="o">!</span>
+<span class="n">After</span> <span class="n">invoke</span> <span class="n">sayHello</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h1 id="动态代理">动态代理</h1>
+
+<h2 id="代理类-1">代理类</h2>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="rouge-code"><pre><span class="k">public</span> <span class="kd">class</span> <span class="nc">ProxyHandler</span> <span class="n">implements</span> <span class="nc">InvocationHandler</span><span class="p">{</span>
+    <span class="k">private</span> <span class="nc">Object</span> <span class="k">object</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nc">ProxyHandler</span><span class="p">(</span><span class="nc">Object</span> <span class="k">object</span><span class="p">){</span>
+        <span class="k">this</span><span class="p">.</span><span class="kd">object</span> <span class="err">= object;
+    }
+    @</span><span class="nc">Override</span>
+    <span class="k">public</span> <span class="nc">Object</span> <span class="nf">invoke</span><span class="p">(</span><span class="nc">Object</span> <span class="n">proxy</span><span class="p">,</span> <span class="nc">Method</span> <span class="n">method</span><span class="p">,</span> <span class="nc">Object</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="n">throws</span> <span class="nc">Throwable</span> <span class="p">{</span>
+        <span class="nc">System</span><span class="p">.</span><span class="k">out</span><span class="p">.</span><span class="nf">println</span><span class="p">(</span><span class="s">"Before invoke "</span>  <span class="p">+</span> <span class="n">method</span><span class="p">.</span><span class="nf">getName</span><span class="p">());</span>
+        <span class="n">method</span><span class="p">.</span><span class="nf">invoke</span><span class="p">(</span><span class="k">object</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+        <span class="nc">System</span><span class="p">.</span><span class="k">out</span><span class="p">.</span><span class="nf">println</span><span class="p">(</span><span class="s">"After invoke "</span> <span class="p">+</span> <span class="n">method</span><span class="p">.</span><span class="nf">getName</span><span class="p">());</span>
+        <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="代理类的使用-1">代理类的使用</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="rouge-code"><pre>    <span class="k">public</span> <span class="k">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="n">getProperties</span><span class="p">().</span><span class="n">setProperty</span><span class="p">(</span><span class="s">"sun.misc.ProxyGenerator.saveGeneratedFiles"</span><span class="p">,</span> <span class="s">"true"</span><span class="p">);</span>
+
+        <span class="n">HelloInterface</span> <span class="n">hello</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Hello</span><span class="p">();</span>
+        
+        <span class="n">InvocationHandler</span> <span class="n">handler</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ProxyHandler</span><span class="p">(</span><span class="n">hello</span><span class="p">);</span>
+
+        <span class="n">HelloInterface</span> <span class="n">proxyHello</span> <span class="o">=</span> <span class="p">(</span><span class="n">HelloInterface</span><span class="p">)</span> <span class="n">Proxy</span><span class="p">.</span><span class="n">newProxyInstance</span><span class="p">(</span><span class="n">hello</span><span class="p">.</span><span class="n">getClass</span><span class="p">().</span><span class="n">getClassLoader</span><span class="p">(),</span> <span class="n">hello</span><span class="p">.</span><span class="n">getClass</span><span class="p">().</span><span class="n">getInterfaces</span><span class="p">(),</span> <span class="n">handler</span><span class="p">);</span>
+
+        <span class="n">proxyHello</span><span class="p">.</span><span class="n">sayHello</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="err">输出：</span>
+    <span class="n">Before</span> <span class="n">invoke</span> <span class="n">sayHello</span>
+    <span class="n">Hello</span> <span class="n">zhanghao</span><span class="o">!</span>
+    <span class="n">After</span> <span class="n">invoke</span> <span class="n">sayHello</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><a href="https://www.jianshu.com/p/9bcac608c714">java动态代理</a></p>
+
+<p><a href="https://www.cnblogs.com/boboxing/p/8126046.html">java的三种代理模式</a></p>
+
+:ET

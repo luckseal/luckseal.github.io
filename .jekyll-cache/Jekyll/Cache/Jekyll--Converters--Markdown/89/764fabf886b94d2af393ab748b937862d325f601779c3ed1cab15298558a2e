@@ -1,0 +1,22 @@
+I"4<h3 id="1背景信息">1、背景信息</h3>
+
+<p>攻击者ip：<code class="language-plaintext highlighter-rouge">192.168.1.13</code>
+恶意网址： <code class="language-plaintext highlighter-rouge">http://192.168.1.13/exploit.html</code></p>
+
+<p>受害者系统： <code class="language-plaintext highlighter-rouge">windows7</code>
+受害者浏览器：<code class="language-plaintext highlighter-rouge">IE8 8.0.7600.16385</code></p>
+
+<h3 id="2攻击流程">2、攻击流程</h3>
+<p>受害者访问恶意网址 <code class="language-plaintext highlighter-rouge">http://192.168.1.13/exploit.html</code>，系统即可被攻击者控制：
+<img src="/img/2020-09-09-浏览器溢出攻击与检测(CVE-2018-8174)/1.gif" alt="1" /></p>
+
+<h3 id="3监测思路">3、监测思路</h3>
+<p>可监测浏览器是否存在开启非预期子进程的行为，如存在此行为则可认定存在问题，测试demo如下：
+<img src="/img/2020-09-09-浏览器溢出攻击与检测(CVE-2018-8174)/2-9658566.gif" alt="2" /></p>
+
+<h3 id="4攻击原理">4、攻击原理</h3>
+<p>攻击者可利用缓存区溢出等漏洞，实现当用户浏览攻击者搭建的恶意网址时，直接在其电脑执行任意代码，从而实现控制其电脑的目的。</p>
+
+<h3 id="参考">参考</h3>
+<p>https://github.com/Sch01ar/CVE-2018-8174_EXP</p>
+:ET
