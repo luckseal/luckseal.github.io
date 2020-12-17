@@ -1,0 +1,39 @@
+I"�<h1 id="一本地搭建部署">一、本地搭建部署</h1>
+
+<h2 id="下载">下载</h2>
+
+<p>http://download.sangfor.com.cn/download/product/edr/EDR3.2.21（20200703）.ova</p>
+
+<h2 id="启动">启动</h2>
+
+<p>使用vmware打开，需要输入用户名密码，在出现页面之前输入e</p>
+
+<p>将ro更改为”rw init=/sysroot/bin/sh”</p>
+
+<p>更改完成后按下ctrl+x组</p>
+
+<p><img src="/img/2020-09-10-深信服edr相关/image.jpg" alt="image" /></p>
+
+<p>reboot -f</p>
+
+<p>登陆成功。</p>
+
+<h2 id="开启ssh">开启ssh</h2>
+
+<p>修改 /etc/ssh/sshd_config 参数：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>PasswordAuthentication yes
+PermitRootLogin yes
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>关闭selinux，重启ssh服务。</p>
+
+<h1 id="二漏洞">二、漏洞</h1>
+
+<h2 id="slog_client命令执行">slog_client命令执行</h2>
+
+<p><img src="/img/2020-09-10-深信服edr相关/image-20200911011422483.png" alt="image-20200911011422483" /></p>
+
+:ET

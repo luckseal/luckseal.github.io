@@ -1,0 +1,14 @@
+I"Z<h1 id="一__wakeup函数绕过">一、__wakeup函数绕过</h1>
+
+<p>当序列化数据中，参数数量字段大于实际参数数量时，即可绕过__wakeup函数。</p>
+
+<h1 id="二-反序列化数据hex编码绕过">二、 反序列化数据hex编码绕过</h1>
+
+<p>当序列化数据中s为大写时，即可解析hex数据</p>
+
+<h1 id="三反序列化字符逃逸">三、反序列化字符逃逸</h1>
+
+<p><a href="https://www.cnblogs.com/BOHB-yunying/p/12774297.html">安恒月赛反序列化字符逃逸</a></p>
+
+<p><a href="https://xz.aliyun.com/t/6718">PHP 反序列化字符逃逸</a></p>
+:ET

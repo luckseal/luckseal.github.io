@@ -1,0 +1,18 @@
+I"#<h1 id="一原理">一、原理</h1>
+
+<p><a href="http://www.guideep.com/read?guide=5676830073815040#">rsa原理</a></p>
+
+<ul>
+  <li>选择两个质数p q</li>
+  <li>n=p*q</li>
+  <li>φ=(p-1)*(q-1)</li>
+  <li>选择小与φ且与φ互质的数e</li>
+  <li>找到数d，使e*d%φ=1</li>
+</ul>
+
+<p>（n，e）为公钥，（n，d）为私钥（加解密过程不需要用到p、q）</p>
+
+<h1 id="二常见漏洞有时间学习">二、常见漏洞（有时间学习）</h1>
+
+<p><a href="https://github.com/findneo/RSA-ATTACK">rsa常见漏洞</a></p>
+:ET

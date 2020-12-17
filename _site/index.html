@@ -16,8 +16,8 @@
     <meta property="og:type" content="website">
     <meta property="og:description" content="Learn Web Security The Hard Way">
     
-    <meta property="og:image" content="http://localhost:4000/img/avatar-hux-ny.jpg">
-    <meta property="og:url" content="http://localhost:4000/">
+    <meta property="og:image" content="https://luckseal.github.io/img/avatar-hux-ny.jpg">
+    <meta property="og:url" content="https://luckseal.github.io/">
     <meta property="og:site_name" content="Seal的博客 | Seal Blog">
     
     <title>Seal的博客 | Seal Blog</title>
@@ -29,7 +29,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/">
+    <link rel="canonical" href="https://luckseal.github.io/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -94,6 +94,8 @@
                         <li>
                             <a href="/archive/">Archive</a>
                         </li>
+                        
+                        
                         
                         
                         
@@ -228,6 +230,275 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2020/12/17/XSS/">
+        <h2 class="post-title">
+            XSS
+        </h2>
+        
+        <h3 class="post-subtitle">
+            
+        </h3>
+        
+        <div class="post-content-preview">
+            
+                基本知识
+
+xss
+
+xss是由于未严格过滤用户输入，导致html网页内容可由用户输入控制，从而实现js语句插入，完成某些操作。
+
+XSS分类
+
+反射性XSS
+
+储存性XSS
+
+DOM型XSS
+
+XSS输出位置
+
+
+  
+    HTML
+  
+  
+    JS
+  
+  属性值
+  注释
+
+
+位置
+
+
+  
+    
+      标签
+      属性
+      例
+      编码
+...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by seal on December 17, 2020
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2020/10/15/JWT%E7%9B%B8%E5%85%B3%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/">
+        <h2 class="post-title">
+            JWT相关安全问题
+        </h2>
+        
+        <h3 class="post-subtitle">
+            
+        </h3>
+        
+        <div class="post-content-preview">
+            
+                什么是JWT
+
+Json web token (JWT), 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，特别适用于分布式站点的单点登录（SSO）场景。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token也...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by seal on October 15, 2020
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2020/10/14/%E8%99%9A%E6%8B%9F%E5%8C%96%E5%AE%89%E5%85%A8/">
+        <h2 class="post-title">
+            虚拟化安全
+        </h2>
+        
+        <h3 class="post-subtitle">
+            
+        </h3>
+        
+        <div class="post-content-preview">
+            
+                探测
+
+适用于容器的技术：
+
+
+  systemd-detect-virt
+
+
+一、云环境元数据接口
+
+云环境存在实例metadata api，用以在实例内查询实例相关信息。
+
+腾讯云
+
+相关文档
+
+api地址:http://metadata.tencentyun.com/latest/meta-data/
+
+
+
+阿里云
+
+相关文档
+
+api地址: http://100.100.100.20...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by seal on October 14, 2020
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2020/09/10/%E6%B7%B1%E4%BF%A1%E6%9C%8Dedr%E7%9B%B8%E5%85%B3/">
+        <h2 class="post-title">
+            深信服edr相关
+        </h2>
+        
+        <h3 class="post-subtitle">
+            
+        </h3>
+        
+        <div class="post-content-preview">
+            
+                一、本地搭建部署
+
+下载
+
+http://download.sangfor.com.cn/download/product/edr/EDR3.2.21（20200703）.ova
+
+启动
+
+使用vmware打开，需要输入用户名密码，在出现页面之前输入e
+
+将ro更改为”rw init=/sysroot/bin/sh”
+
+更改完成后按下ctrl+x组
+
+
+
+reboot -f
+
+登陆成功。
+
+...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by seal on September 10, 2020
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2020/09/10/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E7%9B%B8%E5%85%B3%E6%BC%8F%E6%B4%9E/">
+        <h2 class="post-title">
+            php反序列化相关漏洞
+        </h2>
+        
+        <h3 class="post-subtitle">
+            php反序列化中的一些小知识点
+        </h3>
+        
+        <div class="post-content-preview">
+            
+                一、__wakeup函数绕过
+
+当序列化数据中，参数数量字段大于实际参数数量时，即可绕过__wakeup函数。
+
+二、 反序列化数据hex编码绕过
+
+当序列化数据中s为大写时，即可解析hex数据
+
+三、反序列化字符逃逸
+
+安恒月赛反序列化字符逃逸
+
+PHP 反序列化字符逃逸
+
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by seal on September 10, 2020
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2020/09/10/WAF%E5%B8%B8%E8%A7%81%E5%BC%B1%E7%82%B9%E6%80%BB%E7%BB%93/">
+        <h2 class="post-title">
+            WAF常见弱点总结
+        </h2>
+        
+        <h3 class="post-subtitle">
+            
+        </h3>
+        
+        <div class="post-content-preview">
+            
+                我要写什么
+
+WAF绕过已经是一个写烂了大家也看烦了的话题，为什么又要说这个话题？其实一直想写一些我对WAF的粗浅理解，并不想具体到某个漏洞使用某些符号方法绕过检测，而是写WAF这个产品在工作过程中存在哪些流程、特点，每个地方可能存在哪些问题并辅以事例。里面可能会有一些错误的理解，希望大佬们可以指正。
+
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by seal on September 10, 2020
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2020/09/10/RSA%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3/">
+        <h2 class="post-title">
+            RSA算法相关
+        </h2>
+        
+        <h3 class="post-subtitle">
+            
+        </h3>
+        
+        <div class="post-content-preview">
+            
+                一、原理
+
+rsa原理
+
+
+  选择两个质数p q
+  n=p*q
+  φ=(p-1)*(q-1)
+  选择小与φ且与φ互质的数e
+  找到数d，使e*d%φ=1
+
+
+（n，e）为公钥，（n，d）为私钥（加解密过程不需要用到p、q）
+
+二、常见漏洞（有时间学习）
+
+rsa常见漏洞
+
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by seal on September 10, 2020
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2020/09/09/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%BA%A2%E5%87%BA%E6%94%BB%E5%87%BB%E4%B8%8E%E6%A3%80%E6%B5%8B-CVE-2018-8174/">
         <h2 class="post-title">
             浏览器溢出攻击与检测（CVE-2018-8174）
@@ -332,112 +603,17 @@ public WorkContextXmlInputAdapter(InputStream var1...
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2020/09/09/java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
-        <h2 class="post-title">
-            java基础知识
-        </h2>
-        
-        <h3 class="post-subtitle">
-            
-        </h3>
-        
-        <div class="post-content-preview">
-            
-                类
-
-类是一个模板，它描述一类对象的行为和状态。
-
-对象
-对象是类的一个实例（对象不是找个女朋友），有状态和行为。例如，一条狗是一个对象，它的状态有：颜色、名字、品种；行为有：摇尾巴、叫、吃等。
-下图中男孩（boy）、女孩（girl）为类（class），而具体的每个人为该类的对象（object）：
-
-
-
-class对象
-Class代表类的实体，在运行的Java应用程序中表示类和接口。在这个类...
-            
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by seal on September 9, 2020
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2020/09/09/java%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">
-        <h2 class="post-title">
-            java代理模式
-        </h2>
-        
-        <h3 class="post-subtitle">
-            
-        </h3>
-        
-        <div class="post-content-preview">
-            
-                代理目的
-
-代理(Proxy)可以在目标对象实现的基础上,增强额外的功能操作,即扩展目标对象的功能.
-
-基本情况
-
-接口
-
-1
-2
-3
-public interface HelloInterface {
-    void sayHello();
-}
-
-
-被代理类
-
-1
-2
-3
-4
-5
-6
-public class Hello implements HelloInterface{
-    @O...
-            
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by seal on September 9, 2020
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2020/09/09/jackson-databind%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8%E9%93%BEfastjson%E5%A4%8D%E7%8E%B0-CVE-2020-8840/">
-        <h2 class="post-title">
-            jackson-databind反序列化利用链fastjson复现（CVE-2020-8840）
-        </h2>
-        
-        <h3 class="post-subtitle">
-            
-        </h3>
-        
-        <div class="post-content-preview">
-            
-                漏洞介绍
-
-2月19日，NVD发布安全通告披露了jackson-databind由JNDI注入导致的远程代码执行漏洞（CVE-2020-8840），CVSS评分为9.8  。受影响版本的jackson-databind中由于缺少某些xbean-reflect/JNDI黑名单类，如org.apache.xbean.propertyeditor.JndiConverter，可导致攻击者使用JND...
-            
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by seal on September 9, 2020
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
+
+<ul class="pager">
+    
+    
+    <li class="next">
+        <a href="/page2">Older Posts &rarr;</a>
+    </li>
+    
+</ul>
 
 
     		</div>
@@ -463,27 +639,27 @@ public class Hello implements HelloInterface{
         
         
         
-                <a data-sort="0004" 
+                <a data-sort="0010" 
                     href="/archive/?tag=%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"
                     title="反序列化"
-                    rel="2">反序列化</a>
+                    rel="3">反序列化</a>
         
-                <a data-sort="0002" 
+                <a data-sort="0009" 
                     href="/archive/?tag=java"
                     title="java"
                     rel="4">java</a>
         
-                <a data-sort="0004" 
+                <a data-sort="0010" 
+                    href="/archive/?tag=web%E5%AE%89%E5%85%A8"
+                    title="web安全"
+                    rel="3">web安全</a>
+        
+                <a data-sort="0011" 
                     href="/archive/?tag=%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"
                     title="漏洞复现"
                     rel="2">漏洞复现</a>
         
-                <a data-sort="0004" 
-                    href="/archive/?tag=web%E5%AE%89%E5%85%A8"
-                    title="web安全"
-                    rel="2">web安全</a>
-        
-                <a data-sort="0004" 
+                <a data-sort="0011" 
                     href="/archive/?tag=weblogic"
                     title="weblogic"
                     rel="2">weblogic</a>
