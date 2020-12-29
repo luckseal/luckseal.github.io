@@ -230,6 +230,46 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2020/12/29/%E9%94%90%E6%8D%B7%E6%98%93%E7%BD%91%E5%85%B3%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">
+        <h2 class="post-title">
+            锐捷易网关远程命令执行漏洞
+        </h2>
+        
+        <h3 class="post-subtitle">
+            
+        </h3>
+        
+        <div class="post-content-preview">
+            
+                goby抓包
+
+
+
+估计是网络原因，请求还未到达goby log平台，客户端就去获取，因此未探测到漏洞。但是我们得到了poc，直接测试。
+
+Poc
+
+1
+2
+3
+4
+5
+6
+7
+8
+POST /guest_auth/guestIsUp.php HTTP/1.1
+Host: x.x.x.x:xx
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS ...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by seal on December 29, 2020
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2020/12/17/XSS/">
         <h2 class="post-title">
             XSS
@@ -333,7 +373,7 @@ Json web token (JWT), 是为了在网络应用环境间传递声明而执行的�
 
 一、云环境元数据接口
 
-云环境存在实例metadata api，用以在实例内查询实例相关信息。
+云环境存在实例metadata api，用以在实例内查询实例相关信息。可以利用metadata api 识别云环境类别。
 
 腾讯云
 
@@ -347,7 +387,7 @@ api地址:http://metadata.tencentyun.com/latest/meta-data/
 
 相关文档
 
-api地址: http://100.100.100.20...
+api...
             
         </div>
     </a>
@@ -569,40 +609,6 @@ weblogic环境搭建
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2020/09/09/weblogic-xmlDecoder%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/">
-        <h2 class="post-title">
-            weblogic xmlDecoder反序列化漏洞
-        </h2>
-        
-        <h3 class="post-subtitle">
-            
-        </h3>
-        
-        <div class="post-content-preview">
-            
-                weblogic XMLDecoder 反序列化漏洞
-CVE-2017-3506
-CVE-2017-10271
-CVE-2017-10352
-CVE-2019-2725
-CVE-2019-2729
-CVE-2017-3506
-漏洞原因
-反序列化数据可控，且对数据未进行任何过滤处理
-1
-2
-3
-public WorkContextXmlInputAdapter(InputStream var1...
-            
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by seal on September 9, 2020
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -639,12 +645,12 @@ public WorkContextXmlInputAdapter(InputStream var1...
         
         
         
-                <a data-sort="0010" 
+                <a data-sort="0011" 
                     href="/archive/?tag=%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"
                     title="反序列化"
                     rel="3">反序列化</a>
         
-                <a data-sort="0009" 
+                <a data-sort="0010" 
                     href="/archive/?tag=java"
                     title="java"
                     rel="4">java</a>
@@ -652,14 +658,14 @@ public WorkContextXmlInputAdapter(InputStream var1...
                 <a data-sort="0010" 
                     href="/archive/?tag=web%E5%AE%89%E5%85%A8"
                     title="web安全"
-                    rel="3">web安全</a>
+                    rel="4">web安全</a>
         
-                <a data-sort="0011" 
+                <a data-sort="0012" 
                     href="/archive/?tag=%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"
                     title="漏洞复现"
                     rel="2">漏洞复现</a>
         
-                <a data-sort="0011" 
+                <a data-sort="0012" 
                     href="/archive/?tag=weblogic"
                     title="weblogic"
                     rel="2">weblogic</a>

